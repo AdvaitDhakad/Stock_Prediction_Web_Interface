@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>
+    Stock Prediction
+  </title>
+    <link rel = "icon" href = "{% static 'logo.png' %}" type = "image/x-icon">
+    <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css"/>
+</head>
+<body class="" style="background: rgb(83,83,83);
+background: radial-gradient(circle, rgba(83,83,83,1) 0%, rgba(0,0,0,1) 100%);">
+<header class="header" style="height:5vh; min-height:10px">
+<!--<nav class="navbar navbar-expand-sm fixed-top navbar-dark">-->
+<nav class="navbar navbar-expand-sm navbar-dark">
+        <div class="collapse navbar-collapse" id="navbar1">
+             <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a href="#navbar1" class="nav-link text-uppercase font-weight-bold text-light">Home </a></li>
+                    <li class="nav-item"><a href="#models" class="nav-link text-uppercase font-weight-bold text-light">Models </a></li>
+                </ul>
+        </div>
+    <form class="row g-3" method="post" id="myFrom">
+        {% csrf_token %}
+    <div class="col-auto">
+        <input class="form-control" id="myText" type="search" placeholder="Search stock" name="stock">
+        <script>
+            document.getElementById("myText").defaultValue = "ADANIENT.NS";
+        </script>
+    </div>
+    <div class="col-auto">
+        <button type="submit" id = "button_nav" class="btn btn-outline-success mb-3">Search</button>
+    </div>
+</form>
+</nav>
+</header>
+{% block content %}
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+<script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  </script>
+
+<!-- Github buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+<script src="{% static 'soft-ui-dashboard.js' %}"></script>
+{% endblock javascripts %}
+
+</body>
+</html>

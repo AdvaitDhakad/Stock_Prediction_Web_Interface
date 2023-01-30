@@ -1,0 +1,418 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+<style>
+
+
+/* Main Wrapper Container */
+.container-slider {
+  position: relative;
+  width: 100%;
+  height: 650px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  align: center;
+}
+
+/* Slider Container which contains images */
+.slides {
+    background: rgb(255,205,205);
+    background: radial-gradient(circle, rgba(255,205,205,1) 0%, rgba(0,0,0,1) 96%);
+}
+
+/* Default Image Properties */
+.slides img {
+  position: absolute;
+
+<!--  object-fit: cover;-->
+  object-position: center;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.5s ease-in-out;
+  transition-delay: 500ms;
+}
+
+/* Active Image or Current image to display */
+.slides > img[data-active] {
+  opacity: 1;
+  transform: scale(1);
+  transition-delay: 0ms;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Image Slider Next And Previous Buttons */
+.btn-slide {
+  position: absolute;
+  background: #f1f1f1;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  border-radius: 50%;
+  opacity: 0;
+  border: 1px solid rgba(34, 34, 34, 0.287);
+  transition: opacity 300ms ease-in-out;
+  cursor: pointer;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.btn-slide > img {
+  width: 100%;
+}
+
+/* Show Buttons when user hover on the slider Container */
+.container-slider:hover > .btn-slide {
+  opacity: 1;
+}
+
+/* Previous and Next Button Position Absolute */
+.prev,
+.next {
+  top: 50%;
+  transform: translateY(-60%);
+}
+
+.prev {
+  left: 20px;
+}
+.next {
+  right: 20px;
+}
+
+/* Bottom Dots Container  */
+.container-dots {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+}
+
+/* Sigle Dot style */
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 3px solid #f1f1f1;
+  margin: 0 5px;
+  background: #f1f1f1;
+  cursor: pointer;
+  transition: background-color 500ms ease-in-out;
+}
+
+/* Change the color of bg when user hover on it. */
+.dot:hover {
+  opacity: 0.9;
+  background: rgb(32, 32, 32);
+}
+
+/* Current or active dot */
+.dot[data-active="true"] {
+  background: rgb(32, 32, 32);
+}
+
+</style>
+{% endblock stylesheets %}
+{% block content %}
+
+<div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-8">
+                  <div class="numbers">
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">NIFTY 50</p>
+                    <h5 class="font-weight-bolder mb-0">
+                      0000
+                      <span class="text-success text-sm font-weight-bolder">+00%</span>
+                    </h5>
+                  </div>
+                </div>
+                <div class="col-4 text-end">
+                  <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-8">
+                  <div class="numbers">
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">NIFTY BANK</p>
+                    <h5 class="font-weight-bolder mb-0">
+                      0000
+                      <span class="text-success text-sm font-weight-bolder">+00%</span>
+                    </h5>
+                  </div>
+                </div>
+                <div class="col-4 text-end">
+                  <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                    <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-8">
+                  <div class="numbers">
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">NIFTY IT</p>
+                    <h5 class="font-weight-bolder mb-0">
+                      0000
+                      <span class="text-danger text-sm font-weight-bolder">00%</span>
+                    </h5>
+                  </div>
+                </div>
+                <div class="col-4 text-end">
+                  <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                    <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+          <div class="card">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-8">
+                  <div class="numbers">
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">GOLD 05-dec-2022</p>
+                    <h5 class="font-weight-bolder mb-0">
+                      0000
+                      <span class="text-success text-sm font-weight-bolder">+00%</span>
+                    </h5>
+                  </div>
+                </div>
+                <div class="col-4 text-end">
+                  <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                    <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-lg-7 mb-lg-0 mb-4">
+          <div class="card">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="d-flex flex-column h-100">
+<!--                    <p class="mb-1 pt-2 text-bold"></p>-->
+                    <h5 class="font-weight-bolder">Our Objective</h5>
+                    <p class="mb-5">Our  objective is to use the diffrent machine learning models to
+                      predict the price of a stock in realtime.</p>
+                    <a class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="javascript:;">
+                      Read More
+                      <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-lg-5 ms-auto text-center mt-5 mt-lg-0">
+                  <div class="bg-gradient-primary border-radius-lg h-100">
+                    <div class="position-relative d-flex align-items-center justify-content-center h-100">
+<!--                      <img class="w-100 position-relative z-index-2 pt-4" src="{{ ASSETS_ROOT }}/img/illustrations/rocket-white.png" alt="rocket">-->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="card h-100 p-3">
+<!--            <div class="overflow-hidden position-relative border-radius-lg bg-cover h-100" style="background-image: url('{{ ASSETS_ROOT }}/img/ivancik.jpg');">-->
+              <span class="mask bg-gradient-dark"></span>
+              <div class="card-body position-relative z-index-1 d-flex flex-column h-100 p-3">
+                <h5 class="text-white font-weight-bolder mb-4 pt-2">What is Stock Market</h5>
+                <p class="text-white">Stock market is secondary market where different companies are listed to
+                  offer there equity in exchange for money.</p>
+                <a class="text-white text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="javascript:;">
+                  Read More
+                  <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<div class="row mt-4 m-2">
+        <div class="col-lg-6">
+          <div class="card z-index-2" style="height:100%">
+            <div class="card-body p-3">
+              <div class="bg-gradient-dark border-radius-lg py-3 pe-1 mb-3" style="height:85%">
+                <div class="chart">
+                  <canvas id="chart-bars" class="chart-canvas" height="450"></canvas>
+                </div>
+              </div>
+              <h6 class="ms-2 mt-4 mb-0"> Active Users </h6>
+              <p class="text-sm ms-2"> (<span class="font-weight-bolder">+23%</span>) than last week </p>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card z-index-1">
+            <div class="card-header pb-0">
+              <h6>Graph overview</h6>
+              <p class="text-sm">
+<!--                <i class="fa fa-arrow-up text-success"></i>-->
+                <span class="font-weight-bold">some graph</span> of technical analysis.
+              </p>
+            </div>
+            <div class="card-body p-1">
+              <div class="chart">
+                  <img src="{% static 'RSI.png' %}" alt="" width=100% >
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<div class="row mt-4">
+        <div class="col-lg-6 col-md-5 m-4" >
+                <div class="container-slider">
+              <div class="slides"></div>
+              <!--  Previous Button  -->
+              <button class="btn-slide prev">
+                <img src="https://imgur.com/SUyRJqI.png" alt="prevBtn" />
+              </button>
+
+              <!--  Next Button  -->
+              <button class="btn-slide next">
+                <img src=" https://imgur.com/M6rDsRR.png" alt="nextBtn" />
+              </button>
+
+              <!--  Container for dots  -->
+              <div class="container-dots"></div>
+            </div>
+            </div>
+            </div>
+
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+<script>
+const slides = document.querySelector(".slides");
+const containerDots = document.querySelector(".container-dots");
+
+var slideIndex = 1;
+
+// Images container
+const images = [
+  { src: "{% static 'RSI.png' %}" },
+  { src: "{% static 'fig1.png' %}" },
+  { src: "{% static 'marie.jpg' %}" },
+ // { src: "https://rb.gy/nsefjh" },
+ // { src: "https://rb.gy/dssu2a" }
+];
+
+// Adding images and dots to the Respective Container
+images.map((img) => {
+  // Creating Image Element and adding src of that image
+  var imgTag = document.createElement("img");
+  imgTag.src = img.src;
+
+  // Creating Dot (div) Element adding 'dot' class to it
+  var dot = document.createElement("div");
+  dot.classList.add("dot");
+
+  //  Appending the image and dots to respective container
+  slides.appendChild(imgTag);
+  containerDots.appendChild(dot);
+});
+
+// Adding EventListener to All dots so that when user click on it trigger move dots;
+const dots = containerDots.querySelectorAll("*").forEach((dot, index) => {
+  dot.addEventListener("click", () => {
+    moveDot(index + 1);
+  });
+});
+
+// It helps to move the dot, it take "index" as parameter and update the slideIndex
+function moveDot(index) {
+  slideIndex = index;
+  updateImageAndDot();
+}
+
+// Update Image And Slide Dot according to the [data-active]
+function updateImageAndDot() {
+  /* ...........Updating Image.............. */
+  const activeSlide = slides.querySelector("[data-active]");
+  slides.children[slideIndex - 1].dataset.active = true;
+  activeSlide && delete activeSlide.dataset.active;
+
+  /* ...........Updating Dots.............. */
+  const activeDot = containerDots.querySelector("[data-active]");
+  containerDots.children[slideIndex - 1].dataset.active = true;
+  activeDot && delete activeDot.dataset.active;
+}
+
+// Slide Next Button Click Event
+const nextSlide = () => {
+  // it will update the slideIndex on the basis of the images.length as it gets greater than images.length, this will initialize to the 1
+  if (slideIndex !== images.length) {
+    ++slideIndex;
+  } else if (slideIndex === images.length) {
+    slideIndex = 1;
+  }
+  updateImageAndDot();
+};
+
+const nextBtn = document.querySelector(".next");
+nextBtn.onclick = nextSlide;
+
+// Slide Previous Button Click Event
+const prevSlide = () => {
+  // It will check if the slideIndex is less equal to 1 then change it to the images.legnth, it will enable infinite scrolling
+  if (slideIndex !== 1) {
+    --slideIndex;
+  } else if (slideIndex === 1) {
+    slideIndex = images.length;
+  }
+  updateImageAndDot();
+};
+
+const prevBtn = document.querySelector(".prev");
+prevBtn.onclick = prevSlide;
+
+// Show the Image as the Page Loads;
+updateImageAndDot();
+
+window.onload = function () {
+  var loadTime =
+    window.performance.timing.domContentLoadedEventEnd -
+    window.performance.timing.navigationStart;
+  console.log("Page load time is " + loadTime);
+};
+
+</script>
+{% endblock javascripts %}

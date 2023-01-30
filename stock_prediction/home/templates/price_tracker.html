@@ -1,0 +1,150 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load myfilters %}
+{% block content_live_prices %}
+{% block stylesheets  %}
+    <style>
+ .slide_trackerr_tracker {
+        width: 640px;
+        height: 500px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 0px;
+        text-align: center;
+        overflow: hidden;
+      }
+      .image-container {
+        width: 2500px;
+        align : start;
+        display : flex;
+        height: 500px;
+        clear: both;
+        position: relative;
+        -webkit-transition: left 2s;
+        -moz-transition: left 2s;
+        -o-transition: left 2s;
+        transition: left 2s;
+      }
+      .slide_tracker {
+        float: left;
+        margin: 0px;
+        padding: 0px;
+        position: relative;
+      }
+      #slide_tracker-1:target ~ .image-container {
+        left: 0px;
+      }
+      #slide_tracker-2:target ~ .image-container {
+        left: -640px;
+      }
+      #slide_tracker-3:target ~ .image-container {
+        left: -1350px;
+      }
+      .buttons {
+        position: relative;
+        top: -17px;
+      }
+      .buttons a {
+        display: inline-block;
+        height: 15px;
+        width: 15px;
+        border-radius: 50px;
+        background-color: black;
+      }
+</style>
+{% endblock stylesheets %}
+
+<div class="row mt-3 m-2">
+        <div class="col-lg-6">
+          <div class="card z-index-2" style="height:100%">
+            <div class="card-body p-3">
+                <h4 class="text-center text-uppercase font-weight-bold text-dark ">LIVE STOCK PRICES</h4>
+              <div class="bg-gradient-dark border-radius-lg py-3 pe-1 mb-3" style="height:95%">
+<!--                  <div class="container">-->
+                      <table class="table-container">
+                  <table class="table">
+                     <thead class="text-center text-uppercase font-weight-bold text-light ">
+                        <tr>
+                          <th scope="col">Sno</th>
+                          <th scope="col">Stock Name</th>
+                          <th scope="col">Live Prices</th>
+                          <th scope="col">Open</th>
+                          <th scope="col">Prev.Close</th>
+                          <th scope="col">Volume</th>
+                            <th scope="col">Change</th>
+                        </tr>
+                      </thead>
+                      <tbody class="font-weight-bold">
+                      {% for key, value in data.items %}
+                        <tr>
+                          <th scope="row">{{forloop.counter}}</th>
+                          <td>{{key}}</td>
+                          <td id="{{key}}_price">{{ value|get:"Quote Price"|floatformat:4  }}</td>
+                          <td id="{{key}}_open">{{ value|get:"Open"|floatformat:4  }}</td>
+                          <td id="{{key}}_prevprice">{{ value|get:"Previous Close"|floatformat:4  }}</td>
+                          <td>{{ value|get:"Volume" }}
+                          <td id="{{key}}_change"><script>
+              var change = document.getElementById("{{key}}_price").innerHTML - document.getElementById(
+                "{{key}}_prevprice").innerHTML;
+              change = Number((change).toFixed(4));
+              if (change > 0) {
+                document.getElementById("{{key}}_change").className = "text-success";
+                document.getElementById("{{key}}_change").innerHTML = "+" + change;
+              } else if (change < 1) {
+                document.getElementById("{{key}}_change").className = "text-danger";
+                document.getElementById("{{key}}_change").innerHTML = change;
+              } else {
+                document.getElementById("{{key}}_change").innerHTML = change;
+              }
+            </script>
+                          </td>
+                        </tr>
+                      {% endfor %}
+                      </tbody>
+                    </table>
+                      </table>
+                  </div>
+              </div>
+<!--            </div>-->
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card z-index-1">
+            <div class="card-header pb-0">
+                {% for key, value in stock_chosen.items %}
+                {% if key == 'longName' %}
+                <h4 class="text-center text-uppercase font-weight-bold text-dark ">Technical Analysis of
+                    {{value}}
+                </h4>
+                {% endif %}
+                {% endfor %}
+                 {% for key, value in stock_chosen.items %}
+                {% if key == 'longBusinessSummary' %}
+                <p class="text-sm text-dark">{{value}}</p>
+                 {% endif %}
+                {% endfor %}
+
+            </div>
+              <div class="card-body">
+             <div class="slide_trackerr_tracker">
+                  <span id="slide_tracker-1"></span>
+                  <span id="slide_tracker-2"></span>
+<!--                  <span id="slide_tracker-3"></span>-->
+                  <div class="image-container">
+                    <img src="data:iamge/png;base64, {{chart|safe}}"/>
+                    <img src="data:iamge/png;base64, {{chart_2|safe}}" />
+<!--                    <img src="data:iamge/png;base64, {{chart|safe}}" />-->
+                  </div>
+                  <div class="buttons">
+                    <a href="#slide_tracker-1"></a>
+                    <a href="#slide_tracker-2"></a>
+<!--                    <a href="#slide_tracker-3"></a>-->
+                  </div>
+             </div>
+            </div>
+          </div>
+        </div>
+      </div>
+{% include 'price_predictor.html' %}
+{% endblock %}
+

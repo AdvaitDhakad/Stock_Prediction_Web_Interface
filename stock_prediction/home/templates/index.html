@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load myfilters %}
+{% block title %} Dashboard {% endblock title %}
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+{% endblock stylesheets %}
+{% block content %}
+<div class="container-fluid py-4">
+      <div class="row">
+        {% for key, value in header_data.items %}
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-body p-3">
+              <div class="row d-flex justify-content-around">
+                <div class="col-8">
+                  <div class="numbers">
+                    <p class="text-sm mb-0 text-capitalize font-weight-bold">
+                          {% for keyd, valued in dict1.items %}
+                              {% if keyd ==  key  %}
+                                {{ valued.0 }}
+                      {% endif %}
+
+                          {% endfor %}   </p>
+                    <h5 class="font-weight-bolder mb-0">
+                      {{ value|get:"Quote Price"|floatformat:4  }}
+                    </h5>
+                  </div>
+                </div>
+                <div class="col-4 text-end">
+                            {% for keyd, valued in dict1.items %}
+                              {% if keyd ==  key  %}
+                                <img src = "{% static valued.1 %}" width="75" height="55" >
+                  {% endif %}
+                  {% endfor %}
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="row mt-3">
+        <div class="col-lg-5 mb-lg-0 mb-4">
+          <div class="card">
+            <div class="card-body p-3">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="d-flex flex-column h-100">
+                    <h5 class="font-weight-bolder">Our Objective!</h5>
+                    <p class ="font-weight-bold">
+                        Our objective is to use the different machine learning models to
+                      predict the price of a stock in realtime. During the loading of the site the live data is fetched
+                        train and validated than the results in converted to graph and presented. The site will also help
+                        the user to get the basic idea of business of the company that he/she entered with various graph
+                        of technical analysis done simultaneously.
+                    </p>
+                  </div>
+                </div>
+                <div class="col-lg-5 ms-auto mt-5 mt-lg-0">
+                  <div class="bg-gradient-light border-radius-lg h-100">
+                    <div class="position-relative d-flex h-100">
+                        <h5 class="text-dark font-weight-bolder">DISCLAIMER</h5>
+                        <p class="text-danger"><br>This is just for education and simulation purposes you
+                            are not advice to take financial decision based on the prediction used here. <br>
+                        </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="card h-100 p-3">
+              <span class="mask bg-gradient-dark"></span>
+              <div class="card-body position-relative z-index-1 d-flex flex-column h-100 p-3">
+                <h5 class="text-white font-weight-bolder mb-4 pt-2">What is Stock Market?</h5>
+                <p class="text-white">The stock market is a financial market where stock of publicly traded companies are bought and sold. A stock represents an ownership share in a company and entitles the holder to a claim on a portion of the company's assets and earnings.
+
+Stock markets exist to provide a platform for companies to raise capital by selling shares to the public, and for investors to buy and sell these shares.The stock prices are determined by supply and demand in the market.
+
+Investors can buy and sell stocks through a brokerage account. There are various types of stock market investment strategies, such as buying and holding for the long term, day trading, or actively managing a portfolio of stocks. Some investors seek to maximize returns by buying and selling stocks frequently, while others aim to hold onto stocks for a long time in order to benefit from the potential for capital appreciation.</p>
+                <a class="text-white text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="https://www.nseindia.com/" target="_blank" rel="noopener noreferrer">
+                  Read More
+                  <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+{% block content_live_prices %}
+{% endblock %}
+
+{% endblock  %}
+
