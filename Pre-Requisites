@@ -1,0 +1,4 @@
+To run the website you have to download all the source files and should have python installed on the local machine. Then using the virtual environment(venv) in the command
+prompt in the appropriate location to run the command "python manage.py runserver" and then it would run given all the libraies have been installed.
+
+(one might need to change the address of diffrent static elements from abosulte paths to relative paths for proper fucntioning.)
